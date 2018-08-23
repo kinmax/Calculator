@@ -1,11 +1,14 @@
 package com.motosserra.Calculator;
 
 import static org.junit.Assert.*;
-
+import org.junit.runner.RunWith;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CalculatorTest 
+@RunWith(JUnitParamsRunner.class)
+public class CalculatorTest
 {
 	private Calculator c;
 	
@@ -16,16 +19,16 @@ public class CalculatorTest
 	}
 	
 	@Test
-	public void calculatorVariasSomasTest() 
+	@Parameters({ "5+3+2,10", "5,5", "-5,-5", "+5,5", "12-4-2,6", "-12-4-2,-18", "-12+7+2,-3", "+12-4-2,6", "+12+7+2,21" })
+	public void calculatorTests(String exp, int expected)
 	{
-		int rEsp = c.evaluate("5+3+2");
-		assertEquals(10, rEsp);
+		int resp = c.evaluate(exp);
+		assertEquals(expected, resp);
 	}
 	
-	@Test
-	public void calculatorSoUmNroTest() 
+	@Test(expected = InvalidExpressionException.class)
+	public void expressaoInvalida() 
 	{
-		int rEsp = c.evaluate("5");
-		assertEquals(5, rEsp);
+		int rEsp = c.evaluate("3+4A");
 	}
 }
